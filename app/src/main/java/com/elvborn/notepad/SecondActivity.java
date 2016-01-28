@@ -14,6 +14,7 @@ import java.util.List;
 /*
 Save the checkbox state
 Add delete by checkbox
+Adding hold to delete, to notes and listItems
 */
 
 public class SecondActivity extends AppCompatActivity {
