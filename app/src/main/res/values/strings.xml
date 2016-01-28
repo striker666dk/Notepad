@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Notepad</string>
+    <string name="addNoteButton">Add new note</string>
+    <string name="title_activity_list">List</string>
+</resources>

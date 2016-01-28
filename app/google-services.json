@@ -1,0 +1,53 @@
+{
+  "project_info": {
+    "project_id": "notepad-90ae0",
+    "project_number": "893694710226",
+    "name": "Notepad"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893694710226:android:654d3d74b7d1aa71",
+        "client_id": "android:com.elvborn.notepad",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.elvborn.notepad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893694710226-nldfook5frhetkq0dmv518pirl0g23bk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elvborn.notepad",
+            "certificate_hash": "644DB1ED58787A730958042859B36FBB858E72F3"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 2,
+          "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
+          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712"
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
