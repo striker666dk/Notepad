@@ -49,7 +49,9 @@ public class SecondActivity extends AppCompatActivity {
         String inputText = editText.getText().toString().trim();
 
         if(dbHandler.checkListItem(inputText)) {
-            dbHandler.addListItem(noteName, inputText);
+            ListItem listItem = new ListItem(noteName, inputText, 0, 1);
+            dbHandler.addListItem(listItem);
+
             printListItems();
         }else{
             editText.setText("");
@@ -66,15 +68,16 @@ public class SecondActivity extends AppCompatActivity {
 
     //Prints a list of items
     public void printListItems(){
-        List listItems = dbHandler.getListItems(noteName);
+        //List listItems = dbHandler.getListItems(noteName);
+        ListItem[] listItems = dbHandler.getListItems(noteName);
 
         //Convert listItems from list to array
-        String[] listItemsArray = new String[listItems.size()];
+        /*String[] listItemsArray = new String[listItems.size()];
         for(int i=0; i < listItems.size(); i++){
             listItemsArray[i] = listItems.get(i).toString();
-        }
+        }*/
 
-        ListAdapter adapter = new CustomAdapter(this, listItemsArray);
+        ListAdapter adapter = new CustomAdapter(this, listItems);
         listView2.setAdapter(adapter);
         editText.setText("");
     }

@@ -22,7 +22,10 @@ public class DBHandler extends SQLiteOpenHelper{
     //Table 2
     public static final String TABLE_2_NAME = "lists";
     public static final String COLUMN_2_ID = "_notename";
-    public static final String COLUMN_2_LISTITEM = "_listitem";
+    public static final String COLUMN_2_LISTITEM_NAME = "_listitemname";
+    public static final String COLUMN_2_CHECKBOX = "_checkbox";
+    public static final String COLUMN_2_COUNT = "count";
+
 
     public static final String CREATE_TABLE_1 = "CREATE TABLE "+ TABLE_1_NAME + "(" +
             COLUMN_1_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -31,7 +34,9 @@ public class DBHandler extends SQLiteOpenHelper{
 
     public static final String CREATE_TABLE_2 = "CREATE TABLE " + TABLE_2_NAME + "(" +
             COLUMN_2_ID + " TEXT, " +
-            COLUMN_2_LISTITEM + " TEXT " +
+            COLUMN_2_LISTITEM_NAME + " TEXT, " +
+            COLUMN_2_CHECKBOX + " INTEGER, " +
+            COLUMN_2_COUNT + " INTEGER " +
             ");";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -69,10 +74,12 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     //Add list item
-    public void addListItem(String noteName, String listItem){
+    public void addListItem(ListItem listItem){
         ContentValues values = new ContentValues();
-        values.put(COLUMN_2_ID, noteName);
-        values.put(COLUMN_2_LISTITEM, listItem);
+        values.put(COLUMN_2_ID, listItem.get_notename());
+        values.put(COLUMN_2_LISTITEM_NAME, listItem.get_listItemName());
+        values.put(COLUMN_2_CHECKBOX, listItem.get_checkbox());
+        values.put(COLUMN_2_COUNT, listItem.get_count());
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_2_NAME, null, values);
@@ -83,7 +90,7 @@ public class DBHandler extends SQLiteOpenHelper{
     public void deleteListItem(String listItemName){
         SQLiteDatabase db = getWritableDatabase();
 
-        db.execSQL("DELETE FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_LISTITEM + "=\"" + listItemName + "\";");
+        db.execSQL("DELETE FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_LISTITEM_NAME + "=\"" + listItemName + "\";");
     }
 
     //Returns an array for all the notes in database
@@ -108,21 +115,39 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     //Returns an array of listItems
-    public List getListItems(String noteName){
-        List<String> listItems = new ArrayList<>();
+    public ListItem[] getListItems(String noteName){
+        //List<String> listItems = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_ID + "=\"" + noteName + "\";";
 
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
 
-        while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex(COLUMN_2_LISTITEM)) != null){
-                listItems.add(c.getString(c.getColumnIndex(COLUMN_2_LISTITEM)));
+        ListItem[] listItems = new ListItem[c.getCount()];
+        int counter = 0;
 
+        while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex(COLUMN_2_LISTITEM_NAME)) != null){
+                ListItem listItem = new ListItem(
+                        noteName,
+                        c.getString(c.getColumnIndex(COLUMN_2_LISTITEM_NAME)),
+                        c.getInt(c.getColumnIndex(COLUMN_2_CHECKBOX)),
+                        c.getInt(c.getColumnIndex(COLUMN_2_COUNT))
+                );
+
+                listItems[counter] = listItem;
+                counter++;
                 c.moveToNext();
             }
         }
+
+        /*while(!c.isAfterLast()){
+            if(c.getString(c.getColumnIndex(COLUMN_2_LISTITEM_NAME)) != null){
+                listItems.add(c.getString(c.getColumnIndex(COLUMN_2_LISTITEM_NAME)));
+
+                c.moveToNext();
+            }
+        }*/
 
         db.close();
         return listItems;
@@ -144,7 +169,7 @@ public class DBHandler extends SQLiteOpenHelper{
     }
 
     public boolean checkListItem(String listItem){
-        String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_LISTITEM + "=\"" + listItem + "\";";
+        String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_LISTITEM_NAME + "=\"" + listItem + "\";";
         SQLiteDatabase db = getWritableDatabase();
 
         Cursor c = db.rawQuery(query, null);
