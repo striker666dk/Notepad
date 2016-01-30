@@ -12,9 +12,9 @@ import java.util.List;
 
 //TODO
 /*
-Save the checkbox state
-Add delete by checkbox
-Adding hold to delete, to notes and listItems
+Save the checkbox state.
+Add delete by checkbox.
+Adding hold to delete, to notes and listItems.
 */
 
 public class SecondActivity extends AppCompatActivity {
