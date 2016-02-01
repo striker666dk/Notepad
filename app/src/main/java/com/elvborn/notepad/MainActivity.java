@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void printNotes(){
         List notes = dbHandler.getAllNotes();
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notes);
+        ListAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, notes);
         listView.setAdapter(adapter);
         input.setText("");
 
