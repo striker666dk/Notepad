@@ -15,9 +15,9 @@ public class ListItem {
 
     }
 
-    public ListItem(String notename, String _listItemName, int checkbox, int count){
+    public ListItem(String notename, String listItemName, int checkbox, int count){
         this._noteName = notename;
-        this._listItemName = _listItemName;
+        this._listItemName = listItemName;
         this._checkbox = checkbox;
         this._count = count;
     }

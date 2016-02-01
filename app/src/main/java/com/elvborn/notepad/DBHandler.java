@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,10 @@ public class DBHandler extends SQLiteOpenHelper{
 
     //Table 2
     public static final String TABLE_2_NAME = "lists";
-    public static final String COLUMN_2_ID = "_notename";
+    public static final String COLUMN_2_PARENT_NAME = "_notename";
     public static final String COLUMN_2_LISTITEM_NAME = "_listitemname";
     public static final String COLUMN_2_CHECKBOX = "_checkbox";
-    public static final String COLUMN_2_COUNT = "count";
+    public static final String COLUMN_2_LISTITEM_COUNT = "_count";
 
 
     public static final String CREATE_TABLE_1 = "CREATE TABLE "+ TABLE_1_NAME + "(" +
@@ -33,10 +34,10 @@ public class DBHandler extends SQLiteOpenHelper{
             ");";
 
     public static final String CREATE_TABLE_2 = "CREATE TABLE " + TABLE_2_NAME + "(" +
-            COLUMN_2_ID + " TEXT, " +
+            COLUMN_2_PARENT_NAME + " TEXT, " +
             COLUMN_2_LISTITEM_NAME + " TEXT, " +
             COLUMN_2_CHECKBOX + " INTEGER, " +
-            COLUMN_2_COUNT + " INTEGER " +
+            COLUMN_2_LISTITEM_COUNT + " INTEGER " +
             ");";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -69,17 +70,17 @@ public class DBHandler extends SQLiteOpenHelper{
     public void deleteNote(String noteName){
         SQLiteDatabase db = getWritableDatabase();
 
-        db.execSQL("DELETE FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_ID + "=\"" + noteName + "\";");
+        db.execSQL("DELETE FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_PARENT_NAME + "=\"" + noteName + "\";");
         db.execSQL("DELETE FROM " + TABLE_1_NAME + " WHERE " + COLUMN_1_NOTENAME + "=\"" + noteName + "\";");
     }
 
     //Add list item
     public void addListItem(ListItem listItem){
         ContentValues values = new ContentValues();
-        values.put(COLUMN_2_ID, listItem.get_notename());
+        values.put(COLUMN_2_PARENT_NAME, listItem.get_notename());
         values.put(COLUMN_2_LISTITEM_NAME, listItem.get_listItemName());
         values.put(COLUMN_2_CHECKBOX, listItem.get_checkbox());
-        values.put(COLUMN_2_COUNT, listItem.get_count());
+        values.put(COLUMN_2_LISTITEM_COUNT, listItem.get_count());
 
         SQLiteDatabase db = getWritableDatabase();
         db.insert(TABLE_2_NAME, null, values);
@@ -91,6 +92,21 @@ public class DBHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = getWritableDatabase();
 
         db.execSQL("DELETE FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_LISTITEM_NAME + "=\"" + listItemName + "\";");
+    }
+
+    public void updateListItem(ListItem listItem, int isChecked, int listItemCount){
+        /*ContentValues values = new ContentValues();
+        values.put(COLUMN_2_CHECKBOX, isChecked);
+        values.put(COLUMN_2_LISTITEM_COUNT, listItemCount);*/
+
+        //Log.d("Error", COLUMN_2_CHECKBOX + ": " + isChecked + " | " + COLUMN_2_LISTITEM_COUNT + ": " + listItemCount);
+
+        /*SQLiteDatabase db = getWritableDatabase();
+        db.update(TABLE_2_NAME,
+                values,
+                COLUMN_2_PARENT_NAME + " = ? AND " + COLUMN_2_LISTITEM_NAME + " = ?",
+                new String[]{listItem.get_notename(), listItem.get_listItemName()});
+        db.close();*/
     }
 
     //Returns an array for all the notes in database
@@ -118,7 +134,7 @@ public class DBHandler extends SQLiteOpenHelper{
     public ListItem[] getListItems(String noteName){
         //List<String> listItems = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_ID + "=\"" + noteName + "\";";
+        String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_PARENT_NAME + "=\"" + noteName + "\";";
 
         Cursor c = db.rawQuery(query, null);
         c.moveToFirst();
@@ -132,7 +148,7 @@ public class DBHandler extends SQLiteOpenHelper{
                         noteName,
                         c.getString(c.getColumnIndex(COLUMN_2_LISTITEM_NAME)),
                         c.getInt(c.getColumnIndex(COLUMN_2_CHECKBOX)),
-                        c.getInt(c.getColumnIndex(COLUMN_2_COUNT))
+                        c.getInt(c.getColumnIndex(COLUMN_2_LISTITEM_COUNT))
                 );
 
                 listItems[counter] = listItem;
