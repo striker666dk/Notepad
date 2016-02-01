@@ -87,26 +87,30 @@ public class DBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
-    //Delete list item
-    public void deleteListItem(String listItemName){
+    //Delete selected listItems
+    public void deleteSelectedItems(String noteName){
         SQLiteDatabase db = getWritableDatabase();
 
-        db.execSQL("DELETE FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_LISTITEM_NAME + "=\"" + listItemName + "\";");
+        if(checkCheckboxes(noteName)) {
+            db.delete(TABLE_2_NAME,
+                    COLUMN_2_PARENT_NAME + " = ? AND " + COLUMN_2_CHECKBOX + " = ?",
+                    new String[]{noteName, "1"});
+        }
+        db.close();
     }
 
+    //Update listItem values
     public void updateListItem(ListItem listItem, int isChecked, int listItemCount){
-        /*ContentValues values = new ContentValues();
+        ContentValues values = new ContentValues();
         values.put(COLUMN_2_CHECKBOX, isChecked);
-        values.put(COLUMN_2_LISTITEM_COUNT, listItemCount);*/
+        values.put(COLUMN_2_LISTITEM_COUNT, listItemCount);
 
-        //Log.d("Error", COLUMN_2_CHECKBOX + ": " + isChecked + " | " + COLUMN_2_LISTITEM_COUNT + ": " + listItemCount);
-
-        /*SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         db.update(TABLE_2_NAME,
                 values,
                 COLUMN_2_PARENT_NAME + " = ? AND " + COLUMN_2_LISTITEM_NAME + " = ?",
                 new String[]{listItem.get_notename(), listItem.get_listItemName()});
-        db.close();*/
+        db.close();
     }
 
     //Returns an array for all the notes in database
@@ -132,7 +136,6 @@ public class DBHandler extends SQLiteOpenHelper{
 
     //Returns an array of listItems
     public ListItem[] getListItems(String noteName){
-        //List<String> listItems = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_PARENT_NAME + "=\"" + noteName + "\";";
 
@@ -157,14 +160,6 @@ public class DBHandler extends SQLiteOpenHelper{
             }
         }
 
-        /*while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex(COLUMN_2_LISTITEM_NAME)) != null){
-                listItems.add(c.getString(c.getColumnIndex(COLUMN_2_LISTITEM_NAME)));
-
-                c.moveToNext();
-            }
-        }*/
-
         db.close();
         return listItems;
     }
@@ -178,23 +173,28 @@ public class DBHandler extends SQLiteOpenHelper{
 
         System.out.println(c.getCount());
 
-        if(c.getCount() != 0 || name.isEmpty()){
-            return false;
-        }
-        return true;
+        return !(c.getCount() != 0 || name.isEmpty());
     }
 
-    public boolean checkListItem(String listItem){
-        String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_LISTITEM_NAME + "=\"" + listItem + "\";";
+    //Check if note already in in database
+    public boolean checkListItem(String noteName, String listItem){
+        String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_PARENT_NAME + "=\"" + noteName + "\" AND " + COLUMN_2_LISTITEM_NAME + "=\"" + listItem + "\";";
         SQLiteDatabase db = getWritableDatabase();
 
         Cursor c = db.rawQuery(query, null);
 
         System.out.println(c.getCount());
 
-        if(c.getCount() != 0 || listItem.isEmpty()){
-            return false;
-        }
-        return true;
+        return !(c.getCount() != 0 || listItem.isEmpty());
+    }
+
+    //Check if any checkboxes is checked
+    public boolean checkCheckboxes(String noteName){
+        SQLiteDatabase db = getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_2_NAME + " WHERE " + COLUMN_2_PARENT_NAME + "=\"" + noteName + "\" AND " + COLUMN_2_CHECKBOX + "=1";
+        Cursor c = db.rawQuery(query, null);
+
+        return c.getCount() != 0;
     }
 }

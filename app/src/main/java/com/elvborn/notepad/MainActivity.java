@@ -3,13 +3,18 @@ package com.elvborn.notepad;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -50,21 +55,13 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             input.setText("");
-            input.setHint("Name already used");
+            Toast.makeText(getApplicationContext(), "Name already used", Toast.LENGTH_LONG).show();
         }
-    }
-
-    //Delete button pressed
-    public void deleteButtonClicked(View view){
-        String inputText = input.getText().toString().trim();
-        dbHandler.deleteNote(inputText);
-
-        printNotes();
     }
 
     public void printNotes(){
         List notes = dbHandler.getAllNotes();
-        ListAdapter adapter = new ArrayAdapter<List>(this, android.R.layout.simple_list_item_1, notes);
+        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, notes);
         listView.setAdapter(adapter);
         input.setText("");
 
@@ -80,5 +77,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        //
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final String noteName = String.valueOf(parent.getItemAtPosition(position));
+
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(), view);
+                MenuInflater menuInflater = popupMenu.getMenuInflater();
+
+                menuInflater.inflate(R.menu.menu_main, popupMenu.getMenu());
+                popupMenu.show();
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        dbHandler.deleteNote(noteName);
+                        printNotes();
+                        return true;
+                    }
+                });
+                return true;
+            }
+        });
     }
 }

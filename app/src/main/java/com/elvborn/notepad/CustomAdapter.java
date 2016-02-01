@@ -1,22 +1,22 @@
 package com.elvborn.notepad;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 class CustomAdapter extends ArrayAdapter<ListItem>{
 
+    DBHandler dbHandler;
     ListItem[] listItems;
 
     public CustomAdapter(Context context, ListItem[] _listItems) {
         super(context, R.layout.custom_row, _listItems);
 
+        dbHandler = new DBHandler(getContext(), null, null, 1);
         listItems = _listItems;
     }
 
@@ -33,6 +33,19 @@ class CustomAdapter extends ArrayAdapter<ListItem>{
             listItemCheckBox.setChecked(false);
         else
             listItemCheckBox.setChecked(true);
+
+        listItemCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int isCheckedNumber;
+                if(listItemCheckBox.isChecked())
+                    isCheckedNumber = 1;
+                else
+                    isCheckedNumber = 0;
+
+                dbHandler.updateListItem(listItems[position], isCheckedNumber, listItems[position].get_count());
+            }
+        });
 
         return view;
     }
