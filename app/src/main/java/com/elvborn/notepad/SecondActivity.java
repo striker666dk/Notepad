@@ -1,10 +1,12 @@
 package com.elvborn.notepad;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -50,6 +52,9 @@ public class SecondActivity extends AppCompatActivity {
             editText.setText("");
             Toast.makeText(getApplicationContext(), R.string.ItemAlreadyInListError, Toast.LENGTH_LONG).show();
         }
+
+        InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     //Delete item button clicked
