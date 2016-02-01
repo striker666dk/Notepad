@@ -18,7 +18,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add item to list"
+        android:text="@string/AddItemToListButton"
         android:id="@+id/addItemButton"
         android:layout_alignBaseline="@+id/editText"
         android:layout_alignBottom="@+id/editText"
@@ -38,7 +38,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete selected"
+        android:text="@string/DeleteSelectedButton"
         android:id="@+id/deleteItemButton"
         android:layout_above="@+id/addItemButton"
         android:layout_alignParentRight="true"

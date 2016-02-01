@@ -48,7 +48,7 @@ public class SecondActivity extends AppCompatActivity {
             printListItems();
         }else{
             editText.setText("");
-            Toast.makeText(getApplicationContext(), "Item already in list", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.ItemAlreadyInListError, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -56,9 +56,9 @@ public class SecondActivity extends AppCompatActivity {
     public void deleteSelectedItems(View view){
         if(dbHandler.checkCheckboxes(noteName)) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setMessage("Delete items");
+            alert.setMessage(R.string.AlertDeleteMessage);
             alert.setTitle(noteName);
-            alert.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            alert.setPositiveButton(R.string.AlertDeleteButton, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dbHandler.deleteSelectedItems(noteName);
@@ -69,7 +69,7 @@ public class SecondActivity extends AppCompatActivity {
             alert.create().show();
         }
 
-        Toast.makeText(getApplicationContext(), "No items selected", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), R.string.NoItemsSelectedError, Toast.LENGTH_LONG).show();
     }
 
     //Prints a list of items

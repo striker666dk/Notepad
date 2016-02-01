@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notepad</string>
+    <string name="AlertDeleteButton">Slet</string>
+    <string name="AlertDeleteMessage">Slet element</string>
+    <string name="ItemAlreadyInListError">Elementet er allerede i listen</string>
+    <string name="MainActivityTitle">Noter</string>
+    <string name="NoItemsSelectedError">Intet element er valgt</string>
+    <string name="NoteNameAlreadyUsedError">Dette navn er allerede brugt</string>
+    <string name="addNoteButton">Tilføj ny note</string>
+    <string name="title_activity_list">Liste</string>
+    <string name="AddItemToListButton">Tilføj element til liste</string>
+    <string name="DeleteSelectedButton">Slet valgte elementer</string>
+</resources>

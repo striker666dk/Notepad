@@ -2,4 +2,12 @@
     <string name="app_name">Notepad</string>
     <string name="addNoteButton">Add new note</string>
     <string name="title_activity_list">List</string>
+    <string name="MainActivityTitle">Notes</string>
+    <string name="NoteNameAlreadyUsedError">Name already used</string>
+    <string name="ItemAlreadyInListError">Item already in list</string>
+    <string name="AlertDeleteMessage">Delete items</string>
+    <string name="AlertDeleteButton">Delete</string>
+    <string name="NoItemsSelectedError">No items selected</string>
+    <string name="DeleteSelectedButton">Delete selected</string>
+    <string name="AddItemToListButton">Add item to list</string>
 </resources>

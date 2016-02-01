@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("Notes");
+        setTitle(getString(R.string.MainActivityTitle));
 
         input = (EditText)findViewById(R.id.input);
         text = (TextView)findViewById(R.id.text);
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             input.setText("");
-            Toast.makeText(getApplicationContext(), "Name already used", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.NoteNameAlreadyUsedError, Toast.LENGTH_LONG).show();
         }
     }
 
