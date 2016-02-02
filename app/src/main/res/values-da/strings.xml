@@ -11,4 +11,6 @@
     <string name="title_activity_list">Liste</string>
     <string name="AddItemToListButton">Tilføj element til liste</string>
     <string name="DeleteSelectedButton">Slet valgte elementer</string>
+    <string name="addNoteHint">Note navn</string>
+    <string name="addItemHint">Element navn</string>
 </resources>

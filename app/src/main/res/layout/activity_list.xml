@@ -13,7 +13,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/addItemButton"
-        android:layout_toStartOf="@+id/addItemButton" />
+        android:layout_toStartOf="@+id/addItemButton"
+        android:hint="@string/addItemHint" />
 
     <Button
         android:layout_width="wrap_content"

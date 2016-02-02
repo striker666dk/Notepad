@@ -10,4 +10,6 @@
     <string name="NoItemsSelectedError">No items selected</string>
     <string name="DeleteSelectedButton">Delete selected</string>
     <string name="AddItemToListButton">Add item to list</string>
+    <string name="addNoteHint">Note name</string>
+    <string name="addItemHint">Item name</string>
 </resources>
