@@ -109,7 +109,7 @@ public class DBHandler extends SQLiteOpenHelper{
         db.close();*/
     }
 
-    //Returns an array for all the notes in database
+    //Returns an array for all the notes in database.
     public List getAllNotes(){
         List<String> notes = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
