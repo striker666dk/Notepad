@@ -16,6 +16,21 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/listItemName"
-        android:layout_margin="3dp" />
+        android:layout_margin="3dp" /><![CDATA[
 
+
+
+    EditText
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:maxLines="1"
+        android:numeric="integer"
+        android:singleLine="false"
+        android:maxLength="3" />
+
+
+]]>
 </LinearLayout>

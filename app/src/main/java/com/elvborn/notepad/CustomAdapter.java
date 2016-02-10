@@ -1,6 +1,7 @@
 package com.elvborn.notepad;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +29,14 @@ class CustomAdapter extends ArrayAdapter<ListItem>{
         final TextView listItemName = (TextView)view.findViewById(R.id.listItemName);
         listItemName.setText(listItems[position].get_listItemName());
 
+        //Check the state of the checkbox
         final CheckBox listItemCheckBox = (CheckBox)view.findViewById(R.id.listItemCkeckBox);
         if(listItems[position].get_checkbox() == 0)
             listItemCheckBox.setChecked(false);
         else
             listItemCheckBox.setChecked(true);
 
+        //On checkbox click listener
         listItemCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
