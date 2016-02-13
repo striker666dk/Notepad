@@ -12,4 +12,5 @@
     <string name="AddItemToListButton">Add item to list</string>
     <string name="addNoteHint">Note name</string>
     <string name="addItemHint">Item name</string>
+    <string name="MainMenuDeleteButton">Delete</string>
 </resources>

@@ -13,4 +13,5 @@
     <string name="DeleteSelectedButton">Slet valgte elementer</string>
     <string name="addNoteHint">Note navn</string>
     <string name="addItemHint">Element navn</string>
+    <string name="MainMenuDeleteButton">Slet</string>
 </resources>
