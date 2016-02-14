@@ -1,5 +1,5 @@
 package com.elvborn.notepad;
-
+/*
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -103,4 +103,4 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
             findViewById(R.id.sign_out_button).setVisibility(View.GONE);
         }
     }
-}
+}*/
